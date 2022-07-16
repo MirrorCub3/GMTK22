@@ -39,7 +39,8 @@ public class MovementScript : MonoBehaviour
         }
 
         // resets to up if not given a direction input
-        playerDir = Dir.UP;
+        // Without it dash defaults to the last direction the player moved
+        //playerDir = Dir.UP;
 
        // priority on x movement // also keeps track of direction to dash
         movement.x = Input.GetAxisRaw("Horizontal");
