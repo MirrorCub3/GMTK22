@@ -6,7 +6,6 @@ public class MovementScript : MonoBehaviour
 {
     // movement variables
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float dashDis = 2;
 
     [SerializeField] private Rigidbody2D rb;
     private Vector2 movement;
