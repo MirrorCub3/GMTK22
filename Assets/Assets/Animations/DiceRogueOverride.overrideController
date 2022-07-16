@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DiceRogueOverride
+  m_Controller: {fileID: 9100000, guid: 71a2ccd82d9011a4f87c052250617fb1, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 91a8fb53f68bd8f4eb5e8ce3c4fce3f7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a2f4f27fdd3d8c4438e9f78cac11f641, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f7a1738c84368db4ca49204a6baf8cbd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f1c507ab39bdca842878e22ea58978f2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1bc713b6c0eb91c4d8d8e8e418b6cbf4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cc98752c05110434797822342b9c3aef, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d9edcddd2565bb641b5f0e18dfcd02b5, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2bbfcd126ca67ca4696e93e21990b187, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 6223061ef509a0e409e79d44f85c82f6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a2f4f27fdd3d8c4438e9f78cac11f641, type: 2}
