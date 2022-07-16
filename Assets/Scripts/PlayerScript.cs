@@ -20,8 +20,8 @@ public class PlayerScript : MonoBehaviour
         float XInput = Input.GetAxis("Horizontal");
         float YInput = Input.GetAxis("Vertical");
         movementInput = new Vector2(XInput, YInput);
-        movementInput.Normalize();
-        controller.Move(movementInput * Time.deltaTime * speed);
+        //movementInput.Normalize();
+        controller.Move(movementInput.normalized * Time.deltaTime * speed);
 
     }
 }
