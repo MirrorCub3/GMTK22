@@ -1,1 +1,34 @@
-{}
+{
+    "name": "New Input System",
+    "maps": [
+        {
+            "name": "Shoot",
+            "id": "ca31c69f-f173-4747-95da-7ba7487366df",
+            "actions": [
+                {
+                    "name": "shoot",
+                    "type": "Button",
+                    "id": "cc8f6ca9-d72e-41f2-b935-ebc464b64c69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aab170f4-70a1-4a05-b1ca-ede564c067ed",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
