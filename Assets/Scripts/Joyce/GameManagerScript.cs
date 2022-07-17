@@ -34,7 +34,7 @@ public class GameManagerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && escMenu != null)
         {
-            if (escMenu.active)
+            if (escMenu.activeSelf)
             {
                 escMenu.SetActive(false);
             }
