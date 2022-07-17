@@ -11,6 +11,7 @@ public class Attack3 : MonoBehaviour
 
     private float waitTime = 1f;
     private bool launched = false;
+    private bool newStage = false;
 
     private Transform player;
     private BossScript boss;
@@ -21,13 +22,18 @@ public class Attack3 : MonoBehaviour
         StartCoroutine(CheckDots());
         launched = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        boss = GameObject.FindObjectOfType<BossScript>();
+        boss = FindObjectOfType<BossScript>().GetComponent<BossScript>();
+        newStage = boss.stage2;
     }
     private void Update()
     {
         if(launched == false) //rotate towards player
         {
             transform.up = player.position - transform.position;
+        }
+        if (boss.dead || (boss.stage2 != newStage))
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -42,6 +48,7 @@ public class Attack3 : MonoBehaviour
                 launched = true;
             }
         }
+        transform.parent = null;
         yield return new WaitForSeconds(attackDuration);
         boss.EndAttack();
 
