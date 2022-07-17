@@ -119,4 +119,9 @@ public class MovementScript : MonoBehaviour
         canDash = true;
 
     }
+
+    public bool isDashing()
+    {
+        return dashing;
+    }
 }
