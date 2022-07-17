@@ -1007,6 +1007,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  FireRate: 0.3
 --- !u!1 &1948017221
 GameObject:
   m_ObjectHideFlags: 0
