@@ -6,6 +6,9 @@ public class DoorScript : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManagerScript.instance.EnterBoss();
+        if(collision.gameObject.tag == "Player")
+        {
+            GameManagerScript.instance.EnterBoss();
+        }
     }
 }

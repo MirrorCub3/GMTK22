@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 { 
     public static GameManagerScript instance;
-    public static int playerRoll = 0;
-    public static int bossRoll = 0;
+    public static int playerRoll = 1;
+    public static int bossRoll = 1;
 
     [SerializeField] private int playerMin = 1;
     [SerializeField] private int playerMax = 6;
@@ -17,6 +17,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private int bossMax = 6;
 
     private GameObject escMenu;
+    public bool paused = false;
 
     void Awake()
     {
@@ -29,6 +30,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(this);
         }
+        paused = false;
     }
     private void Update()
     {
@@ -36,11 +38,15 @@ public class GameManagerScript : MonoBehaviour
         {
             if (escMenu.activeSelf)
             {
+                Time.timeScale = 1;
                 escMenu.SetActive(false);
+                paused = false;
             }
             else
             {
+                Time.timeScale = 0;
                 escMenu.SetActive(true);
+                paused = true;
             }
         }
     }
@@ -61,6 +67,14 @@ public class GameManagerScript : MonoBehaviour
     public void Reroll() // sends player back to first room
     {
         SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+        paused = false;
+
+        // in case there are any bullets left over on the screen
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+        foreach (GameObject bullet in bullets) {
+            Destroy(bullet);
+        }
     }
 
     public void EnterBoss()

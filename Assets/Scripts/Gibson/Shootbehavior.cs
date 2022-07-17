@@ -34,6 +34,12 @@ public class Shootbehavior : MonoBehaviour
     //Should be called with an input of (InputAction.CallbackContext context) but that's throwing errors at the moment
     public void Fire(InputAction.CallbackContext context)
     {
+        // used to prevent shooting when paused
+        if (GameManagerScript.instance.paused)
+        {
+            return;
+        }
+
         //Shoots via instantiating a  bullet prefab and assigning its velocity via its 2D rigidbody
         if (ShotGap >= FireRate)
         {

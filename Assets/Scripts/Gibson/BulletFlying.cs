@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class BulletFlying : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float destroyDelay; // length of collision animation
+    [SerializeField] private Animator anim;
+    [SerializeField] private Rigidbody2D rb;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if(collision.gameObject.tag == "Despawn") // Destroys the bullet if it hits anything tagged Despawn - this way we can tag the boss with it too
+        {
+            StartCoroutine(DestroyBullet());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator DestroyBullet()
     {
-        
+        // start collision animation
+        rb.velocity = Vector2.zero;
+        anim.SetTrigger("Collide");
+        yield return new WaitForSeconds(destroyDelay);
+        Destroy(this.gameObject);
     }
 }
