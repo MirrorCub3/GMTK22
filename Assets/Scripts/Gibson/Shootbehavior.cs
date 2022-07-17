@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 public class Shootbehavior : MonoBehaviour
 {
-    
+    //public Camera
     public GameObject bulletPrefab;
     public Rigidbody2D Barrel;
     public float projectileSpeed;
@@ -31,7 +31,14 @@ public class Shootbehavior : MonoBehaviour
     {
         //Shoots via instantiating a  bullet prefab and assigning its velocity via its 2D rigidbody
         Debug.Log("Pew Pew");
-        Instantiate(bulletPrefab,Barrel.position,Quaternion.identity);
-        bulletPrefab.GetComponent<Rigidbody2D>().velocity = transform.forward * projectileSpeed;
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        float ShotAngle = Mathf.Atan2(mousePos.y - Barrel.position.y, mousePos.x - Barrel.position.x) * Mathf.Rad2Deg;
+        Quaternion ShotQuat = Quaternion.Euler(Barrel.position.x, Barrel.position.y, ShotAngle);
+
+        Quaternion aim = Quaternion.FromToRotation(Barrel.position, mousePos);
+        GameObject bullet = Instantiate(bulletPrefab, Barrel.position, ShotQuat);
+        //bulletPrefab.GetComponent<Rigidbody2D>().velocity = bullet.transform * projectileSpeed;
     }
 }
