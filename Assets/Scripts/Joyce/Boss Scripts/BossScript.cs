@@ -12,6 +12,7 @@ public class BossScript : MonoBehaviour
     public float rollSpeed2 = 4f;
     private bool rolling = false;
     public Transform rollTarget;
+    [SerializeField] private float rollDamage = 7f;
 
     public float speedMultiplier = 1f;
 
@@ -21,18 +22,20 @@ public class BossScript : MonoBehaviour
     public float trackTimeMultiplier = 1f; // in case we want to shorten/ lengthen the time it takes to track
 
     [SerializeField] private float contactDamageDelay = 0.2f; // used in case the player is currently in contact with the enemy
-    [SerializeField] private int contactDamage = 5;
+    [SerializeField] private float contactDamage = 5;
     private bool inContact = false;
-    private bool canContactDamage = true;
 
     [SerializeField] private Animator anim;
+
+    [SerializeField] private List<GameObject> attacks;
+    private GameObject myAttack;
     void Start()
     {
         newTrackTime();
         rolling = false;
         inContact = false;
-        canContactDamage = true;
         rollTarget.position = Vector2.zero;
+        myAttack = attacks[GameManagerScript.bossRoll - 1];
     }
 
     void Update()
@@ -57,6 +60,7 @@ public class BossScript : MonoBehaviour
         if (next == 1) // Shoot
         {
             anim.SetTrigger("Shoot");
+            SpawnAttack();
         }
         else // Roll
         {
@@ -115,14 +119,21 @@ public class BossScript : MonoBehaviour
     {
         while (inContact)
         {
-            canContactDamage = false;
             yield return new WaitForSeconds(contactDamageDelay);
             // damage the player here
             print("ow");
-            canContactDamage = true;
         }
     }
 
+    public void SpawnAttack()
+    {
+        Instantiate(myAttack, transform.position, transform.rotation);
+    }
+
+    public void EndAttack()
+    {
+        anim.SetTrigger("Done");
+    }
 
 
 

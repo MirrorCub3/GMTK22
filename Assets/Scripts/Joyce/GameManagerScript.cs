@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour
 { 
     public static GameManagerScript instance;
     public static int playerRoll = 1;
-    public static int bossRoll = 1;
+    public static int bossRoll = 3;
 
     [SerializeField] private int playerMin = 1;
     [SerializeField] private int playerMax = 6;
