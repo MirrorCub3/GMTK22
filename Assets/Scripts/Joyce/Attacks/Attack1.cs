@@ -11,15 +11,23 @@ public class Attack1 : MonoBehaviour
 
     private float waitTime = 1f;
     private BossScript boss;
+    private bool newStage = false;
 
 
     void Start()
     {
         StartCoroutine(StartAttack());
         StartCoroutine(CheckDots());
-        boss = GameObject.FindObjectOfType<BossScript>();
+        boss = FindObjectOfType<BossScript>().GetComponent<BossScript>();
+        newStage = boss.stage2;
     }
-
+    private void Update()
+    {
+        if (boss.dead || (boss.stage2 != newStage))
+        {
+            Destroy(this.gameObject);
+        }
+    }
     private IEnumerator StartAttack()
     {
         yield return new WaitForSeconds(attackDelay);
@@ -30,6 +38,7 @@ public class Attack1 : MonoBehaviour
                 dot.Launch(true);
             }
         }
+        transform.parent = null;
         yield return new WaitForSeconds(attackDuration);
         boss.EndAttack();
 

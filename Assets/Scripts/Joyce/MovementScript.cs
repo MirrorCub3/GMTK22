@@ -6,6 +6,7 @@ public class MovementScript : MonoBehaviour
 {
     // movement variables
     [SerializeField] private float speed = 5f;
+    public float speedMult = 5f;
 
     [SerializeField] private Rigidbody2D rb;
     private Vector2 movement;
@@ -28,6 +29,7 @@ public class MovementScript : MonoBehaviour
         dashing = false;
         canDash = true;
         playerDir = Dir.UP;
+        speedMult = 1;
     }
 
     void Update()
@@ -87,7 +89,7 @@ public class MovementScript : MonoBehaviour
         {
             return;
         }
-        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * speed * speedMult * Time.fixedDeltaTime);
     }
 
     private IEnumerator Dash()
