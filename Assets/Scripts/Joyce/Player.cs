@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private float health;
 
     public float bulletDamage = 5f;
+
+    public Slider healthBar;
     void Start()
     {
         health = maxHealth;
@@ -37,6 +39,8 @@ public class Player : MonoBehaviour
                 break;
 
         }
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
     }
 
     // Update is called once per frame
@@ -48,9 +52,13 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.value = health;
+
         if (health <= 0 && GameManagerScript.instance.playerChances > 1)
         {
             GameManagerScript.instance.RestartRoom();
+            healthBar.maxValue = maxHealth;
+            healthBar.value = health;
         }
         else if (health <= 0 && GameManagerScript.instance.playerChances <= 0)
         {

@@ -35,6 +35,7 @@ public class BossScript : MonoBehaviour
     [SerializeField] private float maxHealth;
     private float health;
 
+    public Slider healthBar;
 
 
     public bool stage2 = false;
@@ -59,6 +60,9 @@ public class BossScript : MonoBehaviour
 
         health = maxHealth;
         playerScript = FindObjectOfType<Player>();
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
     }
 
     void Update()
@@ -117,6 +121,8 @@ public class BossScript : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             health -= playerScript.bulletDamage;
+            healthBar.value = health;
+
             if (0 < health && health < maxHealth/ 2)
             {
                 stage2 = true;
