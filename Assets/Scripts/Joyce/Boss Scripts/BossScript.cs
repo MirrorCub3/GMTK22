@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossScript : MonoBehaviour
 {
@@ -29,6 +30,23 @@ public class BossScript : MonoBehaviour
 
     [SerializeField] private List<GameObject> attacks;
     private GameObject myAttack;
+
+
+    [SerializeField] private float maxHealth;
+    private float health;
+
+    public Slider healthBar;
+
+
+    public bool stage2 = false;
+    public bool dead = false;
+    private Player playerScript;
+
+    [SerializeField] private float top;
+    [SerializeField] private float bot;
+    [SerializeField] private float left;
+    [SerializeField] private float right;
+
     void Start()
     {
         newTrackTime();
@@ -36,11 +54,32 @@ public class BossScript : MonoBehaviour
         inContact = false;
         rollTarget.position = Vector2.zero;
         myAttack = attacks[GameManagerScript.bossRoll - 1];
+        speedMultiplier = 1;
+        stage2 = false;
+        dead = false;
+
+        health = maxHealth;
+        playerScript = FindObjectOfType<Player>();
+
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
     }
 
     void Update()
     {
-        
+        if (transform.position.x < bot)
+        {
+            transform.position = new Vector3(transform.position.x, bot);
+        }
+
+        if (transform.position.y > right)
+        {
+            transform.position = new Vector3(right, transform.position.y);
+        }
+        else if (transform.position.y < left)
+        {
+            transform.position = new Vector3(left, transform.position.y);
+        }
     }
 
     public void StartTracking()
@@ -78,10 +117,33 @@ public class BossScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         print(collision.gameObject.name);
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            health -= playerScript.bulletDamage;
+            healthBar.value = health;
+
+            if (0 < health && health < maxHealth/ 2)
+            {
+                stage2 = true;
+                anim.SetBool("Stage2", stage2);
+            }
+            else if (health <= 0)
+            {
+                anim.SetBool("Dead", true);
+                dead = true;
+                GameManagerScript.instance.Win();
+                return;
+            }
+        }
+
         // do initial damage here
         if (collision.gameObject.tag == "Player")
         {
-            // damage the player here
+            if(rolling)
+                playerScript.TakeDamage(rollDamage);
+            else
+                playerScript.TakeDamage(contactDamage);
             print("ouch");
             inContact = true;
             StartCoroutine(ContactDamage());
@@ -101,7 +163,7 @@ public class BossScript : MonoBehaviour
         if (collision.gameObject.tag == "Despawn" && rolling) // stop rolling if the boss hits a wall, go back to tracking phase
         {
             anim.SetTrigger("Done");
-            print("hit the wall");
+            print("hitting the wall");
             rolling = false;
             rollTarget.localPosition = Vector2.zero;
             newTrackTime();
@@ -120,21 +182,19 @@ public class BossScript : MonoBehaviour
         while (inContact)
         {
             yield return new WaitForSeconds(contactDamageDelay);
-            // damage the player here
+            playerScript.TakeDamage(contactDamage);
             print("ow");
         }
     }
 
     public void SpawnAttack()
     {
-        Instantiate(myAttack, transform.position, transform.rotation);
+        GameObject attack = Instantiate(myAttack, transform.position, transform.rotation);
+        attack.transform.parent = transform;
     }
 
     public void EndAttack()
     {
         anim.SetTrigger("Done");
     }
-
-
-
 }

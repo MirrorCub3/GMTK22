@@ -2,22 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 // responsible for the rng number storage and other game management
 public class GameManagerScript : MonoBehaviour
-{ 
+{
     public static GameManagerScript instance;
-    public static int playerRoll = 1;
-    public static int bossRoll = 3;
+    public static int playerRoll = 0;
+    public static int bossRoll = 1;
 
     [SerializeField] private int playerMin = 1;
     [SerializeField] private int playerMax = 6;
     [SerializeField] private int bossMin = 1;
     [SerializeField] private int bossMax = 6;
 
-    private GameObject escMenu;
+    [SerializeField] private GameObject escMenu;
+    [SerializeField] private Animator d1;
+    [SerializeField] private Text d1Text;
+    [SerializeField] private Animator d2;
+    [SerializeField] private Text d2Text;
+
     public bool paused = false;
+
+    public int playerChances = 3;
+    [SerializeField] GameObject endScreen;
+    [SerializeField] Text endText;
+    
 
     void Awake()
     {
@@ -31,6 +42,13 @@ public class GameManagerScript : MonoBehaviour
             Destroy(this);
         }
         paused = false;
+        playerChances = 3;
+
+        escMenu.SetActive(false);
+        endScreen.SetActive(false);
+
+        d1Text.text = "";
+        d2Text.text = "";
     }
     private void Update()
     {
@@ -53,19 +71,54 @@ public class GameManagerScript : MonoBehaviour
 
     public void Roll()
     {
-        playerRoll = Random.Range(playerMin, playerMax);
-        bossRoll = Random.Range(bossMin, bossMax);
+        playerRoll = Random.Range(playerMin, playerMax + 1);
+        bossRoll = Random.Range(bossMin, bossMax + 1);
 
         print(playerRoll + " " + bossRoll);
+        d1.SetInteger("Roll Number", playerRoll);
+
+        switch (playerRoll)
+        {
+            case (1):
+                d1Text.text = "x1.25SP";
+                break;
+            case (2):
+                d1Text.text = "x1.5SP";
+                break;
+            case (3):
+                d1Text.text = "+25HP";
+                break;
+            case (4):
+                d1Text.text = "+50HP";
+                break;
+            case (5):
+                d1Text.text = "+2.5ATK";
+                break;
+            case (6):
+                d1Text.text = "+5ATK";
+                break;
+
+        }
+
+        d2.SetInteger("Roll Number", bossRoll);
+        d2Text.text = "" + bossRoll;
     }
     
     public void RestartRoom()
     {
+        playerChances--;
+        // reload the current room
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
 
     }
 
     public void Reroll() // sends player back to first room
     {
+        escMenu.SetActive(false);
+        endScreen.SetActive(false);
+        d1Text.text = "";
+        d2Text.text = "";
         SceneManager.LoadScene(0);
         Time.timeScale = 1;
         paused = false;
@@ -75,15 +128,22 @@ public class GameManagerScript : MonoBehaviour
         foreach (GameObject bullet in bullets) {
             Destroy(bullet);
         }
+
+        playerChances = 3;
+    }
+    public void GameOver()
+    {
+        endScreen.SetActive(true);
+        endText.text = "GAME OVER";
+    }
+    public void Win()
+    {
+        endScreen.SetActive(true);
+        endText.text = "YOU WIN";
     }
 
     public void EnterBoss()
     {
         SceneManager.LoadScene(1);
-    }
-
-    public void SetEscMenu(GameObject menu)
-    {
-        escMenu = menu;
     }
 }
