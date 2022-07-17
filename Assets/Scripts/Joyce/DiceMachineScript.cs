@@ -89,7 +89,5 @@ public class DiceMachineScript : MonoBehaviour
 
         d1.SetActive(false);
         d2.SetActive(false);
-
-        // stuff for ui popup here
     }
 }
