@@ -16,6 +16,8 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private int bossMin = 1;
     [SerializeField] private int bossMax = 6;
 
+    private GameObject escMenu;
+
     void Awake()
     {
         if (instance == null)
@@ -26,6 +28,20 @@ public class GameManagerScript : MonoBehaviour
         else
         {
             Destroy(this);
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && escMenu != null)
+        {
+            if (escMenu.active)
+            {
+                escMenu.SetActive(false);
+            }
+            else
+            {
+                escMenu.SetActive(true);
+            }
         }
     }
 
@@ -50,5 +66,10 @@ public class GameManagerScript : MonoBehaviour
     public void EnterBoss()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void SetEscMenu(GameObject menu)
+    {
+        escMenu = menu;
     }
 }
