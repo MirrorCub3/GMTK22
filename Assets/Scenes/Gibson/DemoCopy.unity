@@ -996,7 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4468746007297421493, guid: 9816a116c63f10247a28da37b907a172, type: 3}
-  Barrel: {fileID: 1772740135}
+  Barrel: {fileID: 1772740140}
   projectileSpeed: 5
   ShootControls:
     m_Name: Shoot Controls

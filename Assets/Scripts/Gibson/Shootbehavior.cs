@@ -14,6 +14,11 @@ public class Shootbehavior : MonoBehaviour
     public Transform Barrel;
     public float projectileSpeed;
     public InputAction ShootControls;
+    [SerializeField]
+    private float FireRate = 0.5f;
+
+    private float ShotGap;
+
 
     private void OnEnable()
     {
@@ -30,15 +35,31 @@ public class Shootbehavior : MonoBehaviour
     public void Fire(InputAction.CallbackContext context)
     {
         //Shoots via instantiating a  bullet prefab and assigning its velocity via its 2D rigidbody
-        Debug.Log("Pew Pew");
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        if (ShotGap >= FireRate)
+        {
+            Debug.Log("Pew Pew");
+            Vector3 mousePos = Mouse.current.position.ReadValue();
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
-        float ShotAngle = Mathf.Atan2(mousePos.y - Barrel.position.y, mousePos.x - Barrel.position.x) * Mathf.Rad2Deg;
-        Barrel.rotation = Quaternion.Euler(Barrel.position.x, Barrel.position.y, ShotAngle);
+            float ShotAngle = Mathf.Atan2(mousePos.y - Barrel.position.y, mousePos.x - Barrel.position.x) * Mathf.Rad2Deg;
+            Barrel.rotation = Quaternion.Euler(Barrel.position.x, Barrel.position.y, ShotAngle);
 
-        Quaternion aim = Quaternion.FromToRotation(Barrel.position, mousePos);
-        GameObject bullet = Instantiate(bulletPrefab, Barrel.position, Barrel.rotation);
-        bullet.GetComponent<Rigidbody2D>().velocity = Barrel.right * projectileSpeed;
+            Quaternion aim = Quaternion.FromToRotation(Barrel.position, mousePos);
+            GameObject bullet = Instantiate(bulletPrefab, Barrel.position, Barrel.rotation);
+            bullet.GetComponent<Rigidbody2D>().velocity = Barrel.right * projectileSpeed;
+            ShotGap = 0.0f;
+        }
+        else
+        {
+            Debug.Log("Jamming Noises");
+        }
+    }
+    private void Start()
+    {
+        ShotGap = 0.0f;
+    }
+    private void FixedUpdate()
+    {
+        ShotGap += Time.deltaTime;
     }
 }
