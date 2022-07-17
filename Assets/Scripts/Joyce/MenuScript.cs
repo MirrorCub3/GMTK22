@@ -11,6 +11,7 @@ public class MenuScript : MonoBehaviour
     {
         if (isEscMenu)
         {
+            GameManagerScript.instance.SetEscMenu(this.gameObject);
             this.gameObject.SetActive(false);
         }
         if (controls)

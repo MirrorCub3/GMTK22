@@ -16,7 +16,6 @@ public class DotScript : MonoBehaviour
     [SerializeField] private Transform movetarget;
     private bool launched = false;
     private bool isTracking = false;
-    private Player playerScript;
 
 
     private void Start()
@@ -24,7 +23,6 @@ public class DotScript : MonoBehaviour
         boss = GameObject.FindObjectOfType<BossScript>().gameObject;
         player = GameObject.FindGameObjectWithTag("Player");
         launched = false;
-        playerScript = FindObjectOfType<Player>();
     }
     private void Update()
     {
@@ -44,7 +42,7 @@ public class DotScript : MonoBehaviour
 
         if(collision.gameObject.tag == "Player")
         {
-            playerScript.TakeDamage(damage);
+            // do damage to the player
             destroy = true;
         }
         else if(collision.gameObject.tag == "Despawn" && collision.gameObject != boss) // break if it hits a wall

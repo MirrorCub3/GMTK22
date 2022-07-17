@@ -7,11 +7,9 @@ public class Attack2 : MonoBehaviour
     // two tracking dot with a slight fire delay
     [SerializeField] private float attackDelay = .5f; // time before the dot is launched
     public float attackDuration = 2f; // total length of the attack phase, overrides the base class
-
     public List<DotScript> dots;
 
     private float waitTime = 1f;
-    private bool newStage = false;
     private BossScript boss;
 
 
@@ -19,16 +17,9 @@ public class Attack2 : MonoBehaviour
     {
         StartCoroutine(StartAttack());
         StartCoroutine(CheckDots());
-        boss = FindObjectOfType<BossScript>().GetComponent<BossScript>();
-        newStage = boss.stage2;
+        boss = GameObject.FindObjectOfType<BossScript>();
     }
-    private void Update()
-    {
-        if (boss.dead || (boss.stage2 != newStage))
-        {
-            Destroy(this.gameObject);
-        }
-    }
+
     private IEnumerator StartAttack()
     {
         yield return new WaitForSeconds(attackDelay);
@@ -40,7 +31,6 @@ public class Attack2 : MonoBehaviour
             }
             yield return new WaitForSeconds(attackDelay);
         }
-        transform.parent = null;
         yield return new WaitForSeconds(attackDuration);
         boss.EndAttack();
 

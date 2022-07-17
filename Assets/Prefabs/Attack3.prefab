@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3064e9877a3a5914b98d6ea67009df2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDelay: 1.5
+  attackDelay: 2
   attackDuration: 1.5
   dots:
   - {fileID: 8920461197483207039}
@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456161975918, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: lifeSpan
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456621222330, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: m_Enabled
@@ -190,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456161975918, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: lifeSpan
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456621222330, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: m_Enabled
@@ -271,7 +271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456161975918, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: lifeSpan
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6350395456621222330, guid: 371a9f0fa0c32a247a8046335cf2bd6b, type: 3}
       propertyPath: m_Enabled
