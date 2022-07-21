@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Despawn
+  - Chance 3
+  - Chance 2
+  - Chance 1
   layers:
   - Default
   - TransparentFX

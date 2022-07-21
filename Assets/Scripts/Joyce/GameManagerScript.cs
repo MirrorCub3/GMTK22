@@ -29,6 +29,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] GameObject endScreen;
     [SerializeField] Text endText;
     
+    [SerializeField] private GameObject controls;
 
     void Awake()
     {
@@ -41,6 +42,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(this);
         }
+
         paused = false;
         playerChances = 3;
 
@@ -49,21 +51,23 @@ public class GameManagerScript : MonoBehaviour
 
         d1Text.text = "";
         d2Text.text = "";
+
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && escMenu != null)
         {
             if (escMenu.activeSelf)
-            {
-                Time.timeScale = 1;
+            { 
                 escMenu.SetActive(false);
+                Time.timeScale = 1; 
                 paused = false;
+                controls.SetActive(false);
             }
             else
             {
-                Time.timeScale = 0;
                 escMenu.SetActive(true);
+                Time.timeScale = 0;
                 paused = true;
             }
         }
@@ -107,6 +111,7 @@ public class GameManagerScript : MonoBehaviour
     public void RestartRoom()
     {
         playerChances--;
+        
         // reload the current room
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
@@ -115,6 +120,8 @@ public class GameManagerScript : MonoBehaviour
 
     public void Reroll() // sends player back to first room
     {
+        FindObjectOfType<AudioManager> ().StopPlaying ("Boss Room");
+
         escMenu.SetActive(false);
         endScreen.SetActive(false);
         d1Text.text = "";
@@ -130,20 +137,30 @@ public class GameManagerScript : MonoBehaviour
         }
 
         playerChances = 3;
+
+        FindObjectOfType<AudioManager> ().StopPlaying ("Yay");
+        FindObjectOfType<AudioManager> ().StopPlaying ("Boo");
+        FindObjectOfType<AudioManager> ().Play ("Dice Room");
     }
     public void GameOver()
     {
         endScreen.SetActive(true);
         endText.text = "GAME OVER";
+        FindObjectOfType<AudioManager> ().StopPlaying ("Boss Room");
+        FindObjectOfType<AudioManager> ().Play ("Boo");
     }
     public void Win()
     {
         endScreen.SetActive(true);
         endText.text = "YOU WIN";
+        FindObjectOfType<AudioManager> ().StopPlaying ("Boss Room");
+        FindObjectOfType<AudioManager> ().Play ("Yay");
     }
 
     public void EnterBoss()
     {
         SceneManager.LoadScene(1);
+
+        FindObjectOfType<AudioManager> ().Play ("Boss Room");
     }
 }

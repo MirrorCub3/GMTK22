@@ -9,10 +9,6 @@ public class MenuScript : MonoBehaviour
 
     private void Start()
     {
-        if (isEscMenu)
-        {
-            this.gameObject.SetActive(false);
-        }
         if (controls)
         {
             controls.SetActive(false);
@@ -21,21 +17,30 @@ public class MenuScript : MonoBehaviour
 
     public void Reroll()
     {
+        PlayClickSound();
         GameManagerScript.instance.Reroll();
     }
 
     public void OpenControls()
     {
+        PlayClickSound();
         controls.SetActive(true);
     }
 
     public void CloseControls()
     {
+        PlayClickSound();
         controls.SetActive(false);
     }
 
     public void Quit()
     {
+        PlayClickSound();
         Application.Quit();
+    }
+
+    public void PlayClickSound()
+    {
+        FindObjectOfType<AudioManager>().Play("Button Click");
     }
 }

@@ -84,6 +84,7 @@ public class DiceMachineScript : MonoBehaviour
 
         d1Anim.SetInteger("Num", GameManagerScript.playerRoll);
         d2Anim.SetInteger("Num", GameManagerScript.bossRoll);
+        FindObjectOfType<AudioManager> ().StopPlaying ("Dice Room");
 
         yield return new WaitForSeconds(displayTime);
 

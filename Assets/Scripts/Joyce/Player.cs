@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private MovementScript moveScript;
-    private float health;
+    public float health;
 
     public float bulletDamage = 5f;
 
@@ -54,13 +54,13 @@ public class Player : MonoBehaviour
         health -= damage;
         healthBar.value = health;
 
-        if (health <= 0 && GameManagerScript.instance.playerChances > 1)
+        if (health <= 0 && GameManagerScript.instance.playerChances >= 2)
         {
             GameManagerScript.instance.RestartRoom();
             healthBar.maxValue = maxHealth;
             healthBar.value = health;
         }
-        else if (health <= 0 && GameManagerScript.instance.playerChances <= 0)
+        else if (health <= 0 && GameManagerScript.instance.playerChances <= 1)
         {
             GameManagerScript.instance.GameOver();
         }

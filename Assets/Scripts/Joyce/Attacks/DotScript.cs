@@ -46,6 +46,7 @@ public class DotScript : MonoBehaviour
         {
             playerScript.TakeDamage(damage);
             destroy = true;
+            FindObjectOfType<AudioManager>().Play("OUCH WHY");
         }
         else if(collision.gameObject.tag == "Despawn" && collision.gameObject != boss) // break if it hits a wall
         {

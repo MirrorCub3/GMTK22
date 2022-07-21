@@ -135,6 +135,7 @@ public class BossScript : MonoBehaviour
                 GameManagerScript.instance.Win();
                 return;
             }
+
         }
 
         // do initial damage here
@@ -146,6 +147,9 @@ public class BossScript : MonoBehaviour
                 playerScript.TakeDamage(contactDamage);
             print("ouch");
             inContact = true;
+            
+            FindObjectOfType<AudioManager>().Play("Hit");
+
             StartCoroutine(ContactDamage());
         }
         

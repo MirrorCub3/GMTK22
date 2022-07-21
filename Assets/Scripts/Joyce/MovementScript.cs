@@ -78,6 +78,8 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
+            FindObjectOfType<AudioManager>().Play("Dash");
+            
             StartCoroutine(Dash());
         }
         
